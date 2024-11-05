@@ -32,3 +32,4 @@ bin/
 # OS generated files
 Thumbs.db
 ehthumbs.db
+/target/

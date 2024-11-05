@@ -3,16 +3,12 @@ com\hoesl\example\chatapp\package-info.class
 com\hoesl\example\chatapp\entities\ChatMessage.class
 com\hoesl\example\chatapp\config\WebSocketConfig.class
 com\hoesl\example\chatapp\api\ChatMessageService.class
-com\hoesl\example\chatapp\dto\package-info.class
 com\hoesl\example\chatapp\entities\ChatMessageFactory.class
-com\hoesl\example\chatapp\api\ChatController.class
 com\hoesl\example\chatapp\api\WebSocketSessionManager.class
 com\hoesl\example\chatapp\impl\ChatMessageServiceImpl.class
 com\hoesl\example\chatapp\config\RabbitMQConfig.class
-com\hoesl\example\chatapp\dto\ChatMessageDto.class
 com\hoesl\example\chatapp\impl\package-info.class
 com\hoesl\example\chatapp\enums\package-info.class
-com\hoesl\example\chatapp\api\ChatMessageListenerService.class
 com\hoesl\example\chatapp\entities\package-info.class
 com\hoesl\example\chatapp\socket\handler\OperatorWebSocketHandler.class
 com\hoesl\example\chatapp\api\package-info.class
