@@ -1,0 +1,1 @@
+package com.hoesl.example.chatapp.integration.repository;

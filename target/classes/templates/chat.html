@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Chat-Simulation</title>
+    <link rel="stylesheet" href="/css/chat.css">
+</head>
+<body>
+    <h1>Chat-Simulation</h1>
+    
+    <div class="chat-container">
+        <!-- Kunden-Chat -->
+        <div class="chat-window" id="customer-chat">
+            <h2>Kundenchat</h2>
+            <div class="status">
+                <label>
+                    <input type="checkbox" id="customer-online" onclick="toggleCustomerOnline()">
+                    Online
+                </label>
+            </div>
+            <div class="chat-box" id="customer-chat-box"></div>
+            <input type="text" id="customer-name" placeholder="Name eingeben">
+            <input type="text" id="customer-message" placeholder="Nachricht an Operator">
+            <button onclick="sendCustomerMessage()">Senden</button>
+        </div>
+
+        <!-- Operator-Chat -->
+        <div class="chat-window" id="operator-chat">
+            <h2>Operator-Ansicht</h2>
+            <div class="status">
+                <label>
+                    <input type="checkbox" id="operator-online" onclick="toggleOperatorOnline()">
+                    Online
+                </label>
+            </div>
+            <div class="chat-box" id="operator-chat-box"></div>
+            <input type="text" id="operator-message" placeholder="Nachricht an Kunde">
+            <button onclick="sendOperatorMessage()">Senden</button>
+        </div>
+    </div>
+
+    <script>
+        const sessionId = "session123"; 
+        const socketUrl = "ws://localhost:8080/chat";
+        let socket;
+
+        document.addEventListener("DOMContentLoaded", () => {
+            // WebSocket-Verbindung initialisieren
+            socket = new WebSocket(socketUrl);
+
+            socket.onopen = function() {
+                console.log("WebSocket-Verbindung geöffnet.");
+            };
+ 
+            socket.onmessage = function(event) {
+                const message = JSON.parse(event.data);
+                const chatBoxId = message.senderType === "customer" ? "operator-chat-box" : "customer-chat-box";
+                displayMessage(chatBoxId, `${message.time} - ${message.sender}: ${message.content}`, message.senderType);
+            };
+
+            socket.onerror = function(error) {
+                console.error("WebSocket-Fehler:", error);
+            };
+
+            socket.onclose = function() {
+                console.log("WebSocket-Verbindung geschlossen.");
+            };
+        });
+
+        function sendCustomerMessage() {
+            const messageContent = document.getElementById("customer-message").value;
+            const customerName = document.getElementById("customer-name").value || "Unbekannter Kunde";
+            if (messageContent.trim() === "") return;
+
+            const message = {
+                sender: customerName,
+                recipient: "Support",
+                content: messageContent,
+                sessionId: sessionId,
+                senderType: "customer"
+            };
+
+            // Nachricht lokal anzeigen und über WebSocket senden
+            displayMessage("customer-chat-box", `${new Date().toLocaleTimeString()} - ${customerName}: ${messageContent}`, "customer");
+            socket.send(JSON.stringify(message));
+            document.getElementById("customer-message").value = "";
+        }
+
+        function sendOperatorMessage() {
+            const messageContent = document.getElementById("operator-message").value;
+            if (messageContent.trim() === "") return;
+
+            const message = {
+                sender: "Support",
+                recipient: document.getElementById("customer-name").value || "Unbekannter Kunde",
+                content: messageContent,
+                sessionId: sessionId,
+                senderType: "operator"
+            };
+
+            // Nachricht lokal anzeigen und über WebSocket senden
+            displayMessage("operator-chat-box", `${new Date().toLocaleTimeString()} - Support: ${messageContent}`, "operator");
+            socket.send(JSON.stringify(message));
+            document.getElementById("operator-message").value = "";
+        }
+
+        function displayMessage(chatBoxId, message, senderType) {
+            const chatBox = document.getElementById(chatBoxId);
+            const messageElement = document.createElement("div");
+            messageElement.className = senderType === "customer" ? "customer-message" : "operator-message";
+            messageElement.textContent = message;
+            chatBox.appendChild(messageElement);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        function toggleCustomerOnline() {
+            const isOnline = document.getElementById("customer-online").checked;
+            console.log(`Kunde ist ${isOnline ? "online" : "offline"}`);
+        }
+
+        function toggleOperatorOnline() {
+            const isOnline = document.getElementById("operator-online").checked;
+            console.log(`Operator ist ${isOnline ? "online" : "offline"}`);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Application</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="chat-container">
+        <!-- Kunden-Chat -->
+        <div class="chat-box customer-chat">
+            <h1>Kundenchat</h1>
+            <div class="status">
+                <label>
+                    <input type="checkbox" id="customer-online" onclick="toggleCustomerOnline()">
+                    Online
+                </label>
+            </div>
+            <div id="customer-chat-box" class="messages"></div>
+            <div class="message-input">
+                <input type="text" id="sender" placeholder="Ihr Name" disabled>
+                <textarea id="customer-message-content" placeholder="Nachricht an Operator" disabled></textarea>
+                <button onclick="sendCustomerMessage()">Senden</button>
+            </div>
+        </div>
+
+        <!-- Operator-Chat -->
+        <div class="chat-box operator-chat">
+            <h1>Operator-Ansicht</h1>
+            <div class="status">
+                <label>
+                    <input type="checkbox" id="operator-online" onclick="toggleOperatorOnline()">
+                    Online
+                </label>
+            </div>
+            <div id="operator-chat-box" class="messages"></div>
+            <div class="message-input">
+                <textarea id="operator-message-content" placeholder="Nachricht an Kunde" disabled></textarea>
+                <button onclick="sendOperatorMessage()">Senden</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

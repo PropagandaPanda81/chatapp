@@ -1,0 +1,76 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f0f0f0;
+}
+
+.chat-container {
+    display: flex;
+    gap: 20px;
+}
+
+.chat-box {
+    width: 400px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+h1 {
+    text-align: center;
+    background-color: #007bff;
+    color: white;
+    margin: 0;
+    padding: 10px 0;
+}
+
+.messages {
+    height: 300px;
+    overflow-y: scroll;
+    padding: 10px;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+}
+
+.message-input {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+
+.message-input input, .message-input textarea {
+    margin: 5px 0;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 4px;
+    margin-top: 10px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Nachrichten-Stil */
+.customer-message {
+    color: blue;
+}
+
+.operator-message {
+    color: green;
+}
